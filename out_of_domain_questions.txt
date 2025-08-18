@@ -1,0 +1,50 @@
+Write a Python function that reverses a string.
+Explain Big-O notation for time complexity in simple terms.
+What is the difference between a process and a thread?
+How does HTTP differ from HTTPS?
+Solve: 37 * 24.
+Explain how binary search works.
+What is a hash table and how does it resolve collisions?
+Describe the MVC pattern and when to use it.
+What is overfitting in machine learning?
+Explain gradient descent in one paragraph.
+Solve: If a car travels at 60 mph for 2.5 hours, how far does it go?
+What is a REST API?
+Explain the concept of immutability in programming.
+What is a unit test and why is it important?
+How does Git branching work at a high level?
+What is the purpose of virtual environments in Python?
+Explain the differences between TCP and UDP.
+What is a deadlock and how can it be prevented?
+Describe the CAP theorem.
+Explain the difference between SQL and NoSQL databases.
+Write a Python snippet to read a text file and count lines.
+What is memoization? Provide a simple Python example.
+Solve: 12% of 850.
+Explain what a GPU does in deep learning.
+What is the purpose of Docker?
+What makes a function pure in functional programming?
+Describe how DNS works in brief.
+Explain the difference between supervised and unsupervised learning.
+What is cross-validation and why use it?
+What is the difference between symmetric and asymmetric encryption?
+Solve: The average of five numbers is 18. If four sum to 70, what is the fifth?
+What is a CDN and why is it used?
+Explain race conditions and how to avoid them.
+What’s the difference between stack and heap memory?
+How does caching improve performance?
+What is container orchestration?
+Explain the purpose of unit, integration, and end-to-end tests.
+Describe how OAuth 2.0 works at a high level.
+What is latency vs. throughput?
+Explain why indexing speeds up database queries.
+Write a Python list comprehension to square numbers 1–10.
+What is a semaphore?
+Explain event-driven architecture.
+What is the bias–variance tradeoff?
+How does a blockchain ensure immutability?
+What is a load balancer?
+Explain the difference between JSON and XML.
+What are the main sections of a CPU pipeline?
+Solve: 256 ÷ 8 + 7.
+Explain the purpose of a message queue.
