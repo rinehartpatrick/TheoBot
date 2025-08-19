@@ -29,7 +29,7 @@ The model's performance was rigorously benchmarked against the original base mod
 This chart provides a high-level view of model performance across different evaluation sets. It clearly shows the trade-offs and successes of the fine-tuning process.
 
 <br>
-<img src="https://storage.googleapis.com/gemini-assets/2024-05-13/4e84b0f9-a6f6-4d2d-be8a-e5559868bf03.png" alt="Bar chart showing the overall percentage scores for each evaluation category." width="600" height="400">
+<img src="" width="600" height="400">
 <br>
 
 **Analysis**:
@@ -42,7 +42,7 @@ This chart provides a high-level view of model performance across different eval
 This heatmap visualizes the model's strengths and weaknesses across our evaluation rubric for each question category.
 
 <br>
-<img src="https://storage.googleapis.com/gemini-assets/2024-05-13/c66e2c36-7c98-42fa-9a03-7557053e144a.png" alt="Heatmap showing the average scores for different evaluation categories against the rubric categories." width="600" height="400">
+<img src="" width="600" height="400">
 <br>
 
 **Analysis**:
@@ -55,7 +55,7 @@ This heatmap visualizes the model's strengths and weaknesses across our evaluati
 This chart is crucial as it breaks down the *types* of errors made on the most critical in-domain tasks, revealing the direct impact of fine-tuning.
 
 <br>
-<img src="https://storage.googleapis.com/gemini-assets/2024-05-13/5f5835b3-3e1c-4389-9b51-2dfdd59a455a.png" alt="Pie chart showing the distribution of Scriptural Fidelity (SF) scores for the In Domain Theo evaluation." width="600" height="400">
+<img src="" width="600" height="400">
 <br>
 
 **Analysis**:
