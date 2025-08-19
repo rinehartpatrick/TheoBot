@@ -29,7 +29,7 @@ The model's performance was rigorously benchmarked against the original base mod
 This chart provides a high-level view of model performance across different evaluation sets. It clearly shows the trade-offs and successes of the fine-tuning process.
 
 <br>
-<img src="" width="600" height="400">
+<img src="https://github.com/rinehartpatrick/TheoBot/blob/main/Simplified%20Bot%20Comparison%20by%20Domain%20Dataset%20(Accuracy%20%25).png?raw=true" width="600" height="400">
 <br>
 
 **Analysis**:
