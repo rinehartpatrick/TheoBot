@@ -1,9 +1,5 @@
-Of course. Here is a complete README file, structured with separate sections for the introduction, evaluation, and technical details, using the graphs and reasoning previously generated.
-
----
-
 # TheoBot: A Fine-Tuned LLM for Theological Studies
-
+---
 TheoBot is a specialized large language model fine-tuned to provide accurate and contextually aware answers on theology, with a focus on Christianity and Judaism. It is built on the `Qwen/Qwen2.5-7B-Instruct` model and has been aligned with the six core themes of the UK's **GCSE Religious Education** curriculum:
 
 1.  Relationships & Families
