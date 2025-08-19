@@ -9,9 +9,9 @@ TheoBot is a specialized large language model fine-tuned to provide accurate and
 1.  Relationships & Families
 2.  Religion & Life
 3.  The Existence of God & Revelation
-4.  Religion, Peace and Conflict
-5.  Religion, Crime and Punishment
-6.  Religion, Human Rights & Social Justice
+4.  Peace and Conflict
+5.  Crime and Punishment
+6.  Human Rights & Social Justice
 
 The goal of this project was to create a more reliable and factually grounded assistant for students and enthusiasts in this domain, leveraging the efficiency of LoRA for parameter-efficient fine-tuning.
 
