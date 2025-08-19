@@ -42,7 +42,7 @@ This chart provides a high-level view of model performance across different eval
 This heatmap visualizes the model's strengths and weaknesses across our evaluation rubric for each question category.
 
 <br>
-<img src="" width="600" height="400">
+<img src="https://github.com/rinehartpatrick/TheoBot/blob/main/Heatmap%20Performance%20by%20Question%20Category%20and%20Rubric.png?raw=true" width="600" height="400">
 <br>
 
 **Analysis**:
