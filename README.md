@@ -33,9 +33,9 @@ This chart provides a high-level view of model performance across different eval
 <br>
 
 **Analysis**:
-*   **Success in Generalization**: The model achieves an exceptional **99.2%** on "Out of domain Base" questions, confirming that the fine-tuning did not harm the model's excellent general-purpose reasoning and instruction-following abilities.
+*   **Success in Generalization**: Theobot achieves an exceptional **94%** on Out of domain questions, confirming that the fine-tuning did not significantly harm the model's excellent general-purpose reasoning and instruction-following abilities.
 *   **Targeted Improvement**: While performance drops in the more specialized theological domains, the fine-tuned model consistently outperforms the base model in these areas (as shown in the next section's graphs).
-*   **Areas for Improvement**: The lowest score is in the "Nwar domain Base" category, suggesting that the model struggles most with nuanced questions that are adjacent to but not directly covered by its training data. This highlights a potential area for future data curation.
+*   **Areas for Improvement**: The lowest score is in the "Near domain Base" category, suggesting that the model struggles most with nuanced questions that are adjacent to but not directly covered by its training data. This highlights a potential area for future data curation.
 
 ### 2. Performance Heatmap by Rubric
 
@@ -47,8 +47,7 @@ This heatmap visualizes the model's strengths and weaknesses across our evaluati
 
 **Analysis**:
 *   **Core Competencies**: The model consistently scores high in **Task Understanding (TU)** and **Clarity (CL)** across all domains. It understands what is being asked and provides clear, well-structured answers.
-*   **Pinpointed Weaknesses**: The primary areas of weakness, especially in the theological domains, are **Scriptural Fidelity (SF)**, **Thematic Reasoning (TR)**, and **Specificity (SS)**. This indicates that while the model can formulate a good answer, its ability to recall specific scriptural details and provide deep, well-supported reasoning is the most challenging task.
-*   **Perspective Fit (PF)**: The model shows moderate success in adopting a specific theological perspective when asked, but this remains a difficult skill that requires precise terminology and understanding.
+*   **Pinpointed Weaknesses**: The weaker areas, especially in the theological domains, are **Scriptural Fidelity (SF)**, **Thematic Reasoning (TR)**, and **Specificity (SS)**. This indicates that while the model can formulate a good answer, its ability to recall specific scriptural details and provide deep, well-supported reasoning is the most challenging task.
 
 ### 3. Distribution of Errors (In-Domain Scripture Tasks)
 
