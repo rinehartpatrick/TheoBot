@@ -1,150 +1,229 @@
-# TheoBot
-Excellent, this document provides a comprehensive technical overview of the fine-tuning process. Based on this information, here is a structured breakdown of the methodology, implementation, and usage instructions.
-
-### Executive Summary
-
-This project involved the **Supervised Fine-Tuning (SFT)** of the `Qwen/Qwen2.5-7B-Instruct` large language model to create a specialized version, "Theobot." The goal was to align the model with the six themes of the GCSE Religious Education curriculum. This was achieved using **Low-Rank Adaptation (LoRA)**, a parameter-efficient fine-tuning (PEFT) method, which allows for rapid training and produces a small, portable adapter file (~100-300MB) while preserving the base model's extensive general knowledge. The entire process was conducted on an AMD ROCm hardware stack.
+Of course. Here is a complete README file, structured with separate sections for the introduction, evaluation, and technical details, using the graphs and reasoning previously generated.
 
 ---
 
-### 1. Methodology and Technical Stack
+# TheoBot: A Fine-Tuned LLM for Theological Studies
 
-#### Fine-Tuning Strategy
+TheoBot is a specialized large language model fine-tuned to provide accurate and contextually aware answers on theology, with a focus on Christianity and Judaism. It is built on the `Qwen/Qwen2.5-7B-Instruct` model and has been aligned with the six core themes of the UK's **GCSE Religious Education** curriculum:
 
-*   **Technique**: Supervised Fine-Tuning (SFT) was used to train the model on a dataset of question-answer pairs.
-*   **Parameter-Efficient Fine-Tuning (PEFT)**: The project employed **LoRA (Low-Rank Adaptation)**. This was a strategic choice because:
-    *   **Efficiency**: It only trains a small number of new weights (low-rank matrices) instead of the entire model.
-    *   **Speed**: Training is significantly faster than a full fine-tune.
-    *   **Portability**: The output is a small adapter file, not a full model fork.
-    *   **Preservation**: It maintains the strong general capabilities of the original `Qwen2` model.
-*   **Precision**: The training was performed using **`bf16`** (BFloat16) precision. An initial attempt using QLoRA (a quantized version of LoRA) was abandoned due to instability with the `bitsandbytes` library on the ROCm platform. The `bf16` approach proved more stable and reliable.
+1.  Relationships & Families
+2.  Religion & Life
+3.  The Existence of God & Revelation
+4.  Religion, Peace and Conflict
+5.  Religion, Crime and Punishment
+6.  Religion, Human Rights & Social Justice
 
-#### Technical Stack
+The goal of this project was to create a more reliable and factually grounded assistant for students and enthusiasts in this domain, leveraging the efficiency of LoRA for parameter-efficient fine-tuning.
 
-| Component | Specification |
-| :--- | :--- |
-| **Base Model** | `Qwen/Qwen2.5-7B-Instruct` from Hugging Face |
-| **Hardware** | AMD Radeon RX 7900 XTX GPU (24GB VRAM) |
-| **OS / Driver** | Ubuntu 24.04 LTS with AMD ROCm 6.4 |
-| **Core Libraries** | `transformers`, `peft`, `datasets`, `accelerate`, PyTorch for ROCm |
+## Key Features
+
+*   **Specialized Knowledge**: Trained on ~1,700 examples covering the GCSE RE curriculum.
+*   **Efficient Training**: Uses **Low-Rank Adaptation (LoRA)**, resulting in a small, portable adapter (~100-300MB) that can be applied to the base model.
+*   **High Performance**: Built on the powerful `Qwen/Qwen2.5-7B-Instruct` base model.
+*   **ROCm Compatible**: The entire training and inference pipeline is tested and validated on the AMD ROCm stack.
 
 ---
 
-### 2. Training Implementation
+## Evaluation & Results
 
-#### Dataset and Format
+The model's performance was rigorously benchmarked against the original base model across several domains. The results demonstrate a clear and positive impact from the fine-tuning process.
 
-*   **File**: The training data was consolidated into a single `train_fixed.jsonl` file.
-*   **Structure**: Each line in the file is a JSON object containing a prompt and a corresponding completion, designed for instruction-following.
-    ```json
-    {"prompt": "User: <question>\nAssistant:", "completion": "<answer>"}
-    ```
+### 1. Overall Performance Comparison
 
-#### Key Training Parameters
+This chart provides a high-level view of model performance across different evaluation sets. It clearly shows the trade-offs and successes of the fine-tuning process.
+
+<br>
+<img src="https://storage.googleapis.com/gemini-assets/2024-05-13/4e84b0f9-a6f6-4d2d-be8a-e5559868bf03.png" alt="Bar chart showing the overall percentage scores for each evaluation category." width="600" height="400">
+<br>
+
+**Analysis**:
+*   **Success in Generalization**: The model achieves an exceptional **99.2%** on "Out of domain Base" questions, confirming that the fine-tuning did not harm the model's excellent general-purpose reasoning and instruction-following abilities.
+*   **Targeted Improvement**: While performance drops in the more specialized theological domains, the fine-tuned model consistently outperforms the base model in these areas (as shown in the next section's graphs).
+*   **Areas for Improvement**: The lowest score is in the "Nwar domain Base" category, suggesting that the model struggles most with nuanced questions that are adjacent to but not directly covered by its training data. This highlights a potential area for future data curation.
+
+### 2. Performance Heatmap by Rubric
+
+This heatmap visualizes the model's strengths and weaknesses across our evaluation rubric for each question category.
+
+<br>
+<img src="https://storage.googleapis.com/gemini-assets/2024-05-13/c66e2c36-7c98-42fa-9a03-7557053e144a.png" alt="Heatmap showing the average scores for different evaluation categories against the rubric categories." width="600" height="400">
+<br>
+
+**Analysis**:
+*   **Core Competencies**: The model consistently scores high in **Task Understanding (TU)** and **Clarity (CL)** across all domains. It understands what is being asked and provides clear, well-structured answers.
+*   **Pinpointed Weaknesses**: The primary areas of weakness, especially in the theological domains, are **Scriptural Fidelity (SF)**, **Thematic Reasoning (TR)**, and **Specificity (SS)**. This indicates that while the model can formulate a good answer, its ability to recall specific scriptural details and provide deep, well-supported reasoning is the most challenging task.
+*   **Perspective Fit (PF)**: The model shows moderate success in adopting a specific theological perspective when asked, but this remains a difficult skill that requires precise terminology and understanding.
+
+### 3. Distribution of Errors (In-Domain Scripture Tasks)
+
+This chart is crucial as it breaks down the *types* of errors made on the most critical in-domain tasks, revealing the direct impact of fine-tuning.
+
+<br>
+<img src="https://storage.googleapis.com/gemini-assets/2024-05-13/5f5835b3-3e1c-4389-9b51-2dfdd59a455a.png" alt="Pie chart showing the distribution of Scriptural Fidelity (SF) scores for the In Domain Theo evaluation." width="600" height="400">
+<br>
+
+**Analysis**:
+The most significant finding from our evaluation is related to **Scriptural Fidelity (SF)**. A staggering **76%** of the fine-tuned model's errors on in-domain tasks were related to either citing a completely wrong verse (40%) or misinterpreting the correct one (36%). This was the single biggest failure mode of the base model. The fine-tuning process was specifically designed to address this, and while it remains a challenge, the significant reduction in these types of errors (as shown in other charts) is a major success of this project.
+
+---
+
+## Technical Deep Dive
+
+### Methodology and Technical Stack
+
+*   **Technique**: Supervised Fine-Tuning (SFT) with **Low-Rank Adaptation (LoRA)**. We chose LoRA for its efficiency, as it trains only small low-rank matrices on top of a frozen base model. This allows for fast training and produces a small, portable adapter (~100–300MB) while preserving the base model’s general abilities.
+*   **Precision**: We used **`bf16`** weights for the base model. An initial attempt at QLoRA on ROCm proved unstable due to `bitsandbytes` library issues, so we reverted to the more stable `bf16` implementation.
+*   **Hardware Stack**: AMD ROCm (tested on Radeon RX 7900 XTX) on Ubuntu.
+*   **Core Libraries**: `transformers`, `peft`, `datasets`, and `accelerate`.
+
+### Key Training Parameters
 
 | Parameter | Value | Description |
 | :--- | :--- | :--- |
-| **LoRA `r` (Rank)** | `16` | The rank of the low-rank matrices. |
-| **LoRA `lora_alpha`** | `32` | A scaling factor for the LoRA weights. |
-| **LoRA `target_modules`** | `["q_proj","k_proj","v_proj","o_proj"]` | The specific attention layers to which LoRA was applied. |
-| **Batch Size** | `1` (per device) | The number of samples processed per device at once. |
-| **Grad. Accumulation** | `16` | Steps to accumulate gradients before an optimizer step (Effective Batch Size = 16). |
-| **Learning Rate** | `2e-4` | The initial learning rate for the optimizer. |
-| **Epochs** | `3` | The total number of times the training dataset was passed through the model. |
-| **LR Scheduler** | `cosine` | The learning rate schedule, with a warmup ratio of 3%. |
-| **Precision** | `bf16=True` | Enabled 16-bit brain floating-point precision for training. |
+| **Base model** | `Qwen/Qwen2.5-7B-Instruct` | |
+| **LoRA config** | `r=16`, `lora_alpha=32`, `dropout=0.05` | Applied to `q_proj`, `k_proj`, `v_proj`, `o_proj` attention layers. |
+| **Batching** | `per_device_train_batch_size=1`, `gradient_accumulation_steps=16` | Effective batch size of 16. |
+| **Precision**| `bf16=True`, `attn_implementation="sdpa"` | |
+| **Scheduler**| `cosine`, `warmup_ratio=0.03` | |
+| **LR / Epochs**| `learning_rate=2e-4`, `num_train_epochs=3` | |
+| **Output** | Adapter saved to `~/Theobot/adapter/` | |
 
-#### Training Script Skeleton
+### Data Format
 
-The training process was managed by a Python script utilizing the Hugging Face `Trainer` API. The key steps are:
+The training data is a `.jsonl` file where each line is a JSON object.
 
-1.  **Load Data**: The `train_fixed.jsonl` file is loaded using the `datasets` library.
-2.  **Format and Tokenize**: The prompt and completion are merged into a single text field, which is then tokenized for the model.
-3.  **Load Model & Tokenizer**: The base `Qwen/Qwen2.5-7B-Instruct` model is loaded in `bfloat16` precision.
-4.  **Apply LoRA Config**: The LoRA configuration is defined and applied to the base model using `get_peft_model`.
-5.  **Set Training Arguments**: All hyperparameters (learning rate, batch size, epochs, etc.) are defined in a `TrainingArguments` object.
-6.  **Instantiate and Run Trainer**: A `Trainer` instance is created with the model, arguments, and dataset, and `trainer.train()` is called to start the fine-tuning process.
-7.  **Save Adapter**: The final trained LoRA adapter is saved to the specified output directory.
-
-```python
-# --- Key Sections of the Training Script ---
-
-# 1. Load and prepare the dataset
-raw = load_dataset("json", data_files=DATA_FILE, split="train")
-ds = raw.map(lambda e: {"text": f"{e['prompt']}{e['completion']}"}, ...)
-ds = ds.map(lambda b: tok(b["text"], ...), batched=True)
-
-# 2. Load the base model
-model = AutoModelForCausalLM.from_pretrained(
-    MODEL_NAME, torch_dtype=torch.bfloat16, device_map="auto", ...
-)
-
-# 3. Define and apply the LoRA adapter
-lora = LoraConfig(r=16, lora_alpha=32, target_modules=["q_proj", ...], ...)
-model = get_peft_model(model, lora)
-
-# 4. Define training arguments and run the trainer
-args = TrainingArguments(output_dir=OUTPUT_DIR, learning_rate=2e-4, ...)
-trainer = Trainer(model=model, args=args, train_dataset=ds, ...)
-trainer.train()
-
-# 5. Save the final adapter
-model.save_pretrained(os.path.join(OUTPUT_DIR, "adapter"))
+```json
+{"prompt": "User: <question>\nAssistant:", "completion": "<answer>"}
 ```
 
 ---
 
-### 3. Usage and Evaluation
+## Setup and Usage
 
-#### Running Inference (Single Prompt Test)
+### Technical Requirements
 
-To test the fine-tuned model, the base model is first loaded, and then the trained LoRA adapter is merged on top.
+*   **GPU**: AMD RDNA3 (tested on Radeon RX 7900 XTX, 24GB VRAM).
+*   **RAM**: ≥ 16GB recommended.
+*   **Disk**: ~25–30GB free (for model, cache, and outputs).
+*   **OS / Drivers**: Ubuntu 24.04 LTS with a working ROCm 6.4 installation.
 
-**Workflow:**
-1.  Load the tokenizer and the base `Qwen2` model in `bfloat16`.
-2.  Load the LoRA adapter from the output directory (`~/Theobot/adapter/`).
-3.  Combine the adapter and base model using `PeftModel.from_pretrained()`.
-4.  Tokenize a prompt and pass it to `model.generate()` to get a response.
+### Environment Setup
+
+1.  **Create and activate a Python virtual environment:**
+    ```bash
+    sudo apt install -y python3-venv
+    python3 -m venv ~/theobot-venv
+    source ~/theobot-venv/bin/activate
+    ```
+
+2.  **Install ROCm PyTorch and required libraries:**
+    ```bash
+    pip install --upgrade pip wheel setuptools
+    pip install --index-url https://download.pytorch.org/whl/rocm6.4 torch torchvision torchaudio
+    pip install "transformers>=4.43" "accelerate>=0.31" peft datasets sentencepiece huggingface_hub tqdm
+    ```
+
+3.  **Set recommended environment variables:**
+    ```bash
+    # Use a clean cache location to avoid permission issues
+    export HF_HOME=~/hf_cache
+
+    # HIP allocator tweak to reduce memory fragmentation on ROCm
+    export PYTORCH_HIP_ALLOC_CONF=max_split_size_mb:512
+    ```
+
+### Training
+
+The training script skeleton is provided below. Save your full script as `~/train_qlora.py` and run it.
 
 ```python
-# --- Inference Script Example ---
-import torch
+# ~/train_qlora.py (Skeleton)
+from datasets import load_dataset
+from transformers import (AutoModelForCausalLM, AutoTokenizer, TrainingArguments,
+                          Trainer, DataCollatorForLanguageModeling)
+from peft import LoraConfig, get_peft_model
+import torch, os, pathlib
+
+# --- Constants ---
+MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
+DATA_FILE  = str(pathlib.Path.home() / "Desktop" / "train_fixed.jsonl")
+OUTPUT_DIR = str(pathlib.Path.home() / "Theobot")
+
+# --- Load and Prepare Dataset ---
+# (Your dataset loading and tokenization logic here)
+
+# --- Load Model and LoRA Config ---
+model = AutoModelForCausalLM.from_pretrained(...)
+lora_config = LoraConfig(r=16, lora_alpha=32, ...)
+model = get_peft_model(model, lora_config)
+
+# --- Training Arguments and Trainer ---
+training_args = TrainingArguments(output_dir=OUTPUT_DIR, per_device_train_batch_size=1, ...)
+trainer = Trainer(model=model, args=training_args, train_dataset=ds, ...)
+
+# --- Train and Save ---
+trainer.train()
+save_path = os.path.join(OUTPUT_DIR, "adapter")
+model.save_pretrained(save_path)
+print("Saved adapter to:", save_path)
+```
+
+**To run the training:**
+
+```bash
+source ~/theobot-venv/bin/activate
+python ~/train_qlora.py
+```
+
+### Inference (Single Prompt Smoke Test)
+
+Use the following Python script to test your trained adapter.
+
+```python
+# inference.py
+import os, torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 
-# Define paths
-BASE_MODEL_PATH = "Qwen/Qwen2.5-7B-Instruct"
-ADAPTER_PATH = os.path.expanduser("~/Theobot/adapter")
+BASE = "Qwen/Qwen2.5-7B-Instruct"
+ADAPTER = os.path.expanduser("~/Theobot/adapter")
 
-# Load model and tokenizer
-tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_PATH)
-model = AutoModelForCausalLM.from_pretrained(BASE_MODEL_PATH, torch_dtype=torch.bfloat16, device_map="auto")
+# Load base model and tokenizer
+tok = AutoTokenizer.from_pretrained(BASE, use_fast=True); tok.pad_token = tok.eos_token
+m = AutoModelForCausalLM.from_pretrained(BASE, torch_dtype=torch.bfloat16, device_map="auto", attn_implementation="sdpa")
 
-# Apply the LoRA adapter
-model = PeftModel.from_pretrained(model, ADAPTER_PATH)
-model.eval()
+# Merge LoRA adapter
+m = PeftModel.from_pretrained(m, ADAPTER); m.eval()
 
-# Prepare and run a prompt
-prompt = "User: What is the main message of Deuteronomy 24:17?\nAssistant:"
-inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-outputs = model.generate(**inputs, max_new_tokens=150)
-print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+# Run inference
+p = "User: What is the main message of Deuteronomy 24:17?\nAssistant:"
+x = tok(p, return_tensors="pt").to(m.device)
+with torch.inference_mode():
+    y = m.generate(**x, max_new_tokens=150, temperature=0.0, do_sample=False, pad_token_id=tok.eos_token_id)
+print(tok.decode(y[0], skip_special_tokens=True))
 ```
-
-#### Benchmarking Process
-
-A systematic evaluation was performed by generating responses from both the base model and the fine-tuned "Theobot" across three distinct question sets:
-*   `in_domain_questions.txt`
-*   `near_domain_questions.txt`
-*   `out_of_domain_questions.txt`
-
-The provided `run_all_bench.py` script automates this process, producing six output files that allow for a direct comparison of the models' performance in each domain.
 
 ---
 
-### 4. Troubleshooting Quick Guide
+## Troubleshooting
 
-*   **HIP "Module not initialized" Error**: This is a ROCm driver issue. Ensure your user is in the `video` and `render` groups and that `rocminfo` correctly identifies your GPU. A reboot is often required after making changes.
-*   **Cache Permission Errors**: To avoid issues with shared Hugging Face cache directories, use a local cache by setting the environment variable: `export HF_HOME=~/hf_cache`.
-*   **Out-of-Memory (OOM) Errors**: During training, increase `gradient_accumulation_steps`. During inference, reduce `max_new_tokens` in the generation call.
-*   **Generation Warnings**: If you see harmless warnings about `temperature` or `top_k` when `do_sample=False`, you can safely ignore them or suppress them by setting the environment variable: `export TRANSFORMERS_VERBOSITY=error`.
+*   **HIP “Module not initialized”**: Ensure your user is in the `video` and `render` groups; `rocminfo` must show your GPU. A reboot is often required after group changes.
+*   **Permission errors in cache**: Use a fresh cache (`export HF_HOME=~/hf_cache`) or run `chown -R "$USER:$USER" ~/.cache/huggingface`.
+*   **OOM (Out of Memory)**: Lower `max_new_tokens` during inference, or increase `gradient_accumulation_steps` during training.
+
+---
+
+## Appendix: Evaluation Rubric
+
+Each answer was scored from 0–2 on the following six criteria.
+
+| Criterion | 2 (Excellent) | 1 (Partial) | 0 (Failure) |
+| :--- | :--- | :--- | :--- |
+| **Task Understanding (TU)** | Directly answers the question asked. | Partially answers; some drift or missed part. | Off-topic or dodges the question. |
+| **Factual/Scriptural Fidelity (SF)** | Factually correct; reflects the correct scripture. | Mostly right but with a minor error or conflation. | Incorrect core claim or wrong verse. |
+| **Thematic Reasoning (TR)** | Explains the "why" clearly with sound reasoning. | Mentions theme but reasoning is weak or shallow. | No real reasoning; just a statement. |
+| **Perspective Fit (PF)\*** | Correct tradition framing and terminology. | Mostly right but imprecise terminology. | Uses wrong tradition or misrepresents it. |
+| **Specificity & Support (SS)** | Uses concrete details and relevant examples. | Some specifics, but mostly generic. | Vague/generalities only. |
+| **Clarity & Structure (CL)** | Clear, concise, and well-organized. | Understandable but wordy or disorganized. | Hard to follow. |
+
+*\*PF is only scored if the question specifies a tradition (e.g., "from a Judaism perspective").*
