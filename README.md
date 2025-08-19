@@ -55,7 +55,7 @@ This heatmap visualizes the model's strengths and weaknesses across our evaluati
 This chart is crucial as it breaks down the *types* of errors made on the most critical in-domain tasks, revealing the direct impact of fine-tuning.
 
 <br>
-<img src="" width="600" height="400">
+<img src="https://github.com/rinehartpatrick/TheoBot/blob/main/Distribution%20of%20Errors%20(In-Domain%20Tasks).png?raw=true" width="600" height="400">
 <br>
 
 **Analysis**:
