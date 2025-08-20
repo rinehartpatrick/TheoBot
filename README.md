@@ -1,6 +1,6 @@
-# TheoBot: A Fine-Tuned LLM for Theological Studies
+# Theobot: A Fine-Tuned LLM for Theological Studies
 ---
-TheoBot is a specialized large language model fine-tuned to provide accurate and contextually aware answers on theology, with a focus on Christianity and Judaism. It is built on the `Qwen/Qwen2.5-7B-Instruct` model and has been aligned with the six core themes of the UK's **GCSE Religious Education** curriculum:
+Theobot is a specialized large language model fine-tuned to provide accurate and contextually aware answers on theology, with a focus on Christianity and Judaism. It is built on the `Qwen/Qwen2.5-7B-Instruct` model and has been aligned with the six core themes of the UK's **GCSE Religious Education** curriculum:
 
 1.  Relationships & Families
 2.  Religion & Life
@@ -225,14 +225,14 @@ Each answer was scored from 0–2 on the following six criteria.
 
 ## Conclusion: Key Takeaways
 
-This project successfully demonstrates the power and practicality of specialized fine-tuning. The key takeaways from the development and evaluation of TheoBot are:
+This project successfully demonstrates the power and practicality of specialized fine-tuning. The key takeaways from the development and evaluation of Theobot are:
 
-1.  **Focused Fine-Tuning is Highly Effective:** The primary goal was achieved: TheoBot is demonstrably more accurate and reliable than its base model on its target theological domain. It significantly reduces critical errors, particularly in the area of scriptural misattribution, which was the base model's single greatest weakness. This validates that even a relatively small, high-quality dataset can create a much more capable specialist model.
+1.  **Focused Fine-Tuning is Highly Effective:** The primary goal was achieved: Theobot is demonstrably more accurate and reliable than its base model on its target theological domain. It significantly reduces critical errors, particularly in the area of scriptural misattribution, which was the base model's single greatest weakness. This validates that even a relatively small, high-quality dataset can create a much more capable specialist model.
 
 2.  **Domain Specialization Has Its Limits:** Fine-tuning is not a silver bullet. While accuracy improved, the evaluation pinpoints that the most difficult tasks—**precise scriptural recall (SF)** and applying a **nuanced theological perspective (PF)**—remain challenging. This suggests that fine-tuning enhances the model's *familiarity* with a topic, but achieving perfect factual recall and deep, expert-level reasoning is a much harder problem that requires more than just SFT.
 
 3.  **The Viability of PEFT on Consumer Hardware:** This project serves as a practical validation that powerful, domain-specific models can be developed on high-end consumer hardware (AMD ROCm). The use of LoRA was critical, proving that parameter-efficient fine-tuning democratizes access to this technology, removing the need for massive computational resources or cloud infrastructure for effective specialization.
 
-4.  **A Clear Path for Future Improvement:** The error analysis points directly to the next steps. To further improve TheoBot, future work should focus on:
+4.  **A Clear Path for Future Improvement:** The error analysis points directly to the next steps. To further improve Theobot, future work should focus on:
     *   **Targeted Data Augmentation**: Curating more examples that specifically test and train scriptural fidelity and perspective-based reasoning.
     *   **Exploring Hybrid Approaches**: Integrating a **Retrieval-Augmented Generation (RAG)** system would be a logical next step. Allowing the model to first retrieve the exact text of a scripture from a trusted database before formulating its answer could dramatically improve the SF score and mitigate the model's reliance on its internal (and sometimes faulty) memory.
